@@ -1,0 +1,300 @@
+{
+	"info": {
+		"_postman_id": "75fe1b1d-9286-4881-9330-0619accbf9eb",
+		"name": "JiraCollectionCurdOperation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "JiraPostRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"IssueCreated\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"console.log(response.id);\r",
+							"var id_value = response.id;\r",
+							"\r",
+							"pm.globals.set(\"Jira_id\", id_value);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"DAS\"\r\n        },\r\n        \"summary\": \"create issue in Base project\",\r\n        \"description\": \"Creating of an issue using project keys and issue type names using the REST API\",\r\n        \"issuetype\": {\r\n            \"name\": \"Bug\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{JiraHostURI}}/rest/api/2/issue/",
+					"host": [
+						"{{JiraHostURI}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "JiraGetRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Issue\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var id = pm.globals.get(\"Jira_id\");\r",
+							"\r",
+							"// validate id in response\r",
+							"pm.test(\"Validate id in response body\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{JiraHostURI}}/rest/api/2/issue/{{Jira_id}}",
+					"host": [
+						"{{JiraHostURI}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{Jira_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "JiraPutRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update Success\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"description\": \"Updating the issue created\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{JiraHostURI}}/rest/api/2/issue/{{Jira_id}}",
+					"host": [
+						"{{JiraHostURI}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{Jira_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "JiraDeleteRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete Success\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{JiraHostURI}}/rest/api/2/issue/{{Jira_id}}",
+					"host": [
+						"{{JiraHostURI}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{Jira_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetIssueJql",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Got Data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate DisplayName\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Dasvin Kumar R\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{JiraHostURI}}/rest/api/2/search?jql=project=\"{{ProjectName}}\"",
+					"host": [
+						"{{JiraHostURI}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"search"
+					],
+					"query": [
+						{
+							"key": "jql",
+							"value": "project=\"{{ProjectName}}\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "JiraGetIssueType",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Got Data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate Issue Types\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Bug\", \"Epic\", \"Task\", \"Story\", \"Sub-task\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{JiraHostURI}}/rest/api/2/issuetype",
+					"host": [
+						"{{JiraHostURI}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issuetype"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "Qc2GfpAOuy4D2tXYDWt8C8D7",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "dasvinkumar2404@gmail.com",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ProjectName",
+			"value": "DasvinApi",
+			"type": "default"
+		}
+	]
+}
