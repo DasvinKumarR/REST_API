@@ -32,7 +32,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"DAS\"\r\n        },\r\n        \"summary\": \"create issue in Base project\",\r\n        \"description\": \"Creating of an issue using project keys and issue type names using the REST API\",\r\n        \"issuetype\": {\r\n            \"name\": \"Bug\"\r\n        }\r\n    }\r\n}",
+					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"DAS\"\r\n        },\r\n        \"summary\": \"{{summary}}\",\r\n        \"description\": \"{{description}}\",\r\n        \"issuetype\": {\r\n            \"name\": \"Bug\"\r\n        }\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -117,7 +117,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"fields\": {\r\n        \"description\": \"Updating the issue created\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"fields\": {\r\n        \"description\": \"{{update_desc}}\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -260,7 +260,7 @@
 		"basic": [
 			{
 				"key": "password",
-				"value": "Qc2GfpAOuy4D2tXYDWt8C8D7",
+				"value": "mgKyYvvMjdoJ0BqFiOhy6D0F",
 				"type": "string"
 			},
 			{

@@ -36,10 +36,28 @@
 			"value": "",
 			"type": "default",
 			"enabled": true
+		},
+		{
+			"key": "summary",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "description",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "update_desc",
+			"value": "",
+			"type": "default",
+			"enabled": true
 		}
 	],
 	"name": "My Workspace Globals",
 	"_postman_variable_scope": "globals",
-	"_postman_exported_at": "2023-01-29T09:44:09.722Z",
+	"_postman_exported_at": "2023-01-29T10:32:07.838Z",
 	"_postman_exported_using": "Postman/10.8.0"
 }
