@@ -32,7 +32,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"DAS\"\r\n        },\r\n        \"summary\": \"{{summary}}\",\r\n        \"description\": \"{{description}}\",\r\n        \"issuetype\": {\r\n            \"name\": \"Bug\"\r\n        }\r\n    }\r\n}",
+					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"DS\"\r\n        },\r\n        \"summary\": \"{{summary}}\",\r\n        \"description\": \"{{description}}\",\r\n        \"issuetype\": {\r\n            \"name\": \"Bug\"\r\n        }\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -260,7 +260,7 @@
 		"basic": [
 			{
 				"key": "password",
-				"value": "mgKyYvvMjdoJ0BqFiOhy6D0F",
+				"value": "8kz0djv70Yh0E6Xx5Lh60BB5",
 				"type": "string"
 			},
 			{
@@ -293,7 +293,7 @@
 	"variable": [
 		{
 			"key": "ProjectName",
-			"value": "DasvinApi",
+			"value": "DasvinApiTest",
 			"type": "default"
 		}
 	]
