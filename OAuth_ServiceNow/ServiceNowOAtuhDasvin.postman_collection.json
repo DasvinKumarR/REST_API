@@ -1,0 +1,375 @@
+{
+	"info": {
+		"_postman_id": "a5125482-f8c8-427d-8ccc-397ce5d2d8cc",
+		"name": "ServiceNowOAtuhDasvin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Getting token using Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Token Generated\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"var BToken = response.access_token;\r",
+							"console.log(BToken);\r",
+							"\r",
+							"pm.globals.set(\"GToken\", BToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "default"
+						},
+						{
+							"key": "client_id",
+							"value": "ef8bbba17270211064f88e1508c56182",
+							"type": "default"
+						},
+						{
+							"key": "client_secret",
+							"value": "AF2~]55{YP",
+							"type": "default"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "YaO9-A0opfR*",
+							"type": "default"
+						},
+						{
+							"key": "scope",
+							"value": "useraccount",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/oauth_token.do",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"oauth_token.do"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ServiceNowGetOAuth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get's Data\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/api/now/table/{{Table_Name}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"{{Table_Name}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post change request OAuth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"My created Value\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"10win created the this record for practice purpose\");\r",
+							"});\r",
+							"\r",
+							"//save and extract sys id\r",
+							"var res = pm.response.json();\r",
+							"console.log(res.result.sys_id);\r",
+							"var GlSysId = res.result.sys_id;\r",
+							"pm.globals.set(\"GSys_id\", GlSysId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"short_description\":\"My first record in api change request table\",\r\n    \"description\":\"10win created the this record for practice purpose\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/api/now/table/{{Table_Name}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"{{Table_Name}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify Record Adding new field to existing record using OAuth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var res = pm.response.json();\r",
+							"console.log(res.result.approval);\r",
+							"\r",
+							"pm.test(\"Approval\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"approved\", \"updated record in api change request table\", \"10win updates this record for practice purpose\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"approval\":\"Approved\",\r\n    \"short_description\":\"updated record in api change request table\",\r\n    \"description\":\"10win updates this record for practice purpose\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/api/now/table/{{Table_Name}}/{{GSys_id}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"{{Table_Name}}",
+						"{{GSys_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Update Record like updating existing (correction) using OAuth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Partial Update\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"10win first record in api change request table\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"short_description\":\"10win first record in api change request table\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/api/now/table/{{Table_Name}}/{{GSys_id}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"{{Table_Name}}",
+						"{{GSys_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the record using OAuth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204 Deleted\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/api/now/table/{{Table_Name}}/{{GSys_id}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"{{Table_Name}}",
+						"{{GSys_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "state",
+				"value": "test",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "AF2~]55{YP",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "ef8bbba17270211064f88e1508c56182",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "https://dev140626.service-now.com/oauth_token.do",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "https://dev140626.service-now.com/oauth_auth.do",
+				"type": "string"
+			},
+			{
+				"key": "useBrowser",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "https://getpostman.com/oauth2/callback",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "Oauth_test",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Table_Name",
+			"value": "change_request",
+			"type": "default"
+		}
+	]
+}
